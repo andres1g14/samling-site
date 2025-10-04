@@ -1023,7 +1023,7 @@
             color: white;
         }
 
-        /* PRINT STYLES - SIMPLE AND EFFECTIVE */
+        /* PRINT STYLES - CORRECTED ORDER */
         @media print {
             @page {
                 size: A4 portrait;
@@ -1077,13 +1077,14 @@
                 background: white !important;
             }
 
-            /* Company Header */
+            /* Company Header with Line */
             .document-header {
-                padding: 0 0 5mm 0 !important;
+                padding: 0 0 3mm 0 !important;
                 background: white !important;
                 border-bottom: 3px solid #00b0f0 !important;
                 margin-bottom: 5mm !important;
                 text-align: right !important;
+                page-break-inside: avoid !important;
             }
 
             .document-header .doc-title {
@@ -1099,6 +1100,7 @@
                 text-align: right !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             .document-body {
@@ -1106,14 +1108,14 @@
                 position: relative !important;
             }
 
-            /* Company Info Box */
+            /* Company Info Box - First */
             .document-body::before {
                 content: 'Felson Watersafe ApS\A Gartnervej 4\A 6710 Esbjerg V\A CVR-nr. DK26813522\A Tlf. 70206676\A felson@felson.dk';
                 white-space: pre-line;
                 display: block;
                 background: #eeeeee;
-                padding: 5mm;
-                margin: 0 0 8mm 0;
+                padding: 4mm;
+                margin: 0 0 6mm 0;
                 font-size: 9pt;
                 line-height: 1.4;
                 color: #333;
@@ -1121,38 +1123,49 @@
                 font-family: 'Inter', sans-serif;
                 width: 50%;
                 box-sizing: border-box;
-                border-radius: 0;
+                border-radius: 2mm;
+                font-weight: 400;
             }
 
-            /* FØLGESEDDEL Banner */
-            .document-body::after {
+            /* FØLGESEDDEL Banner - After company info */
+            .form-grid::before {
                 content: 'FØLGESEDDEL';
-                display: block;
+                display: block !important;
                 background: #00b0f0 !important;
                 color: white !important;
                 font-size: 16pt !important;
                 font-weight: 700 !important;
                 text-align: center !important;
                 padding: 4mm 0 !important;
-                margin: 0 0 8mm 0 !important;
+                margin: 0 0 6mm 0 !important;
                 letter-spacing: 0.4em !important;
-                border-radius: 0 !important;
-                clear: both !important;
+                border-radius: 2mm !important;
+                font-family: 'Inter', sans-serif !important;
+                text-transform: uppercase !important;
             }
 
             /* Form Grid */
             .form-grid {
                 display: block !important;
-                margin-bottom: 8mm !important;
+                margin-bottom: 6mm !important;
                 page-break-inside: avoid !important;
                 background: white !important;
                 padding: 0 !important;
             }
 
             .form-group {
-                display: block !important;
+                display: inline-block !important;
+                width: 48% !important;
                 margin-bottom: 4mm !important;
+                margin-right: 2% !important;
                 page-break-inside: avoid !important;
+                vertical-align: top !important;
+            }
+
+            .form-group.full-width {
+                display: block !important;
+                width: 100% !important;
+                margin-right: 0 !important;
             }
 
             .form-label {
@@ -1162,6 +1175,7 @@
                 text-transform: uppercase !important;
                 margin-bottom: 1mm !important;
                 display: block !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             .form-input {
@@ -1174,11 +1188,13 @@
                 display: block !important;
                 width: 100% !important;
                 margin: 0 !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             /* Table */
             .items-section {
-                margin-top: 5mm !important;
+                margin-top: 4mm !important;
+                clear: both !important;
             }
 
             .section-header {
@@ -1189,7 +1205,9 @@
                 width: 100% !important;
                 border-collapse: collapse !important;
                 margin-top: 0 !important;
-                border: none !important;
+                border: 1px solid #00b0f0 !important;
+                border-radius: 2mm !important;
+                overflow: hidden !important;
             }
 
             .items-table thead {
@@ -1205,6 +1223,7 @@
                 text-transform: uppercase !important;
                 text-align: left !important;
                 border: none !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             .items-table th.col-antal {
@@ -1227,6 +1246,7 @@
                 color: #000 !important;
                 border-bottom: 1px solid #ddd !important;
                 vertical-align: top !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             .items-table tbody tr:last-child td {
@@ -1241,6 +1261,7 @@
                 color: #000 !important;
                 font-weight: 400 !important;
                 width: 100% !important;
+                font-family: 'Inter', sans-serif !important;
             }
 
             .table-input.antal {
@@ -1253,6 +1274,29 @@
                 min-height: auto !important;
                 overflow: visible !important;
                 resize: none !important;
+            }
+
+            /* Footer */
+            @page {
+                @bottom-center {
+                    content: 'Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V\A CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk';
+                    white-space: pre-line;
+                    font-size: 8pt;
+                    color: #666;
+                    text-align: center;
+                    line-height: 1.3;
+                    font-family: 'Inter', sans-serif;
+                }
+                @bottom-right {
+                    content: 'Side ' counter(page);
+                    font-size: 9pt;
+                    font-weight: 700;
+                    color: white;
+                    background: #00b0f0;
+                    padding: 2mm 4mm;
+                    border-radius: 2mm;
+                    font-family: 'Inter', sans-serif;
+                }
             }
 
             /* Hide input controls */
@@ -1269,22 +1313,251 @@
             }
         }
 
+        /* RESPONSIVE DESIGN - MOBILE FIRST */
         @media (max-width: 1024px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
+            :root {
+                --sidebar-width: 0px;
             }
 
-            .sidebar.active {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+            }
+
+            .sidebar.mobile-open {
                 transform: translateX(0);
             }
 
             .main-content {
                 margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 1.25rem;
+            }
+
+            .top-actions {
+                gap: 0.5rem;
+            }
+
+            .btn {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8125rem;
+            }
+
+            .content-area {
+                padding: 1rem;
             }
 
             .form-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .documents-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .doc-card {
+                padding: 1rem;
+            }
+
+            .items-table {
+                font-size: 0.875rem;
+            }
+
+            .items-table th,
+            .items-table td {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .table-input {
+                font-size: 0.875rem;
+                padding: 0.25rem;
+            }
+
+            /* Mobile menu button */
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: var(--gray-700);
+                cursor: pointer;
+                padding: 0.25rem;
+                margin-right: 1rem;
+            }
+
+            .mobile-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+                display: none;
+            }
+
+            .mobile-overlay.active {
+                display: block;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* TABLET STYLES */
+        @media (max-width: 768px) {
+            .login-card {
+                margin: 1rem;
+                max-width: none;
+            }
+
+            .login-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .login-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .modal {
+                margin: 1rem;
+                max-width: none;
+                width: auto;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .settings-section {
+                margin-bottom: 1.5rem;
+            }
+
+            .input-group {
+                margin-bottom: 1rem;
+            }
+
+            .verification-code {
+                gap: 0.25rem;
+            }
+
+            .verification-code input {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+        }
+
+        /* SMALL MOBILE */
+        @media (max-width: 480px) {
+            .top-bar {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .top-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .btn {
+                flex: 1;
+                justify-content: center;
+                min-width: 0;
+            }
+
+            .btn span {
+                display: none;
+            }
+
+            .content-area {
+                padding: 0.5rem;
+            }
+
+            .document-container {
+                border-radius: 8px;
+                margin: 0.5rem 0;
+            }
+
+            .document-body {
+                padding: 1rem;
+            }
+
+            .form-grid {
+                gap: 0.75rem;
+            }
+
+            .items-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .items-table th,
+            .items-table td {
+                min-width: 100px;
+            }
+
+            .items-table th.col-antal,
+            .items-table td:first-child {
+                min-width: 60px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 0.75rem;
+            }
+
+            .stat-value {
+                font-size: 1.25rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            .documents-grid {
+                gap: 0.75rem;
+            }
+
+            .doc-card {
+                padding: 0.75rem;
+            }
+
+            .toast {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
+                padding: 0.75rem 1rem;
             }
         }
     </style>
@@ -1401,6 +1674,7 @@
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <div class="top-bar">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                 <h1 class="page-title" id="pageTitle">Dashboard</h1>
                 <div class="top-actions">
                     <button class="btn btn-secondary" id="exportBtn">
@@ -1414,6 +1688,9 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Mobile Overlay -->
+            <div class="mobile-overlay" id="mobileOverlay"></div>
 
             <div class="content-area">
                 <!-- DASHBOARD VIEW -->
@@ -1730,6 +2007,9 @@
             userName: document.getElementById('userName'),
             userProfile: document.getElementById('userProfile'),
             logoutBtn: document.getElementById('logoutBtn'),
+            mobileMenuBtn: document.getElementById('mobileMenuBtn'),
+            mobileOverlay: document.getElementById('mobileOverlay'),
+            sidebar: document.querySelector('.sidebar'),
             
             views: {
                 dashboard: document.getElementById('dashboardView'),
@@ -1798,6 +2078,36 @@
             openSecurityFromMenu: document.getElementById('openSecurityFromMenu'),
             logoutFromMenu: document.getElementById('logoutFromMenu')
         };
+
+        // ===== MOBILE MENU =====
+        function toggleMobileMenu() {
+            els.sidebar.classList.toggle('mobile-open');
+            els.mobileOverlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            els.sidebar.classList.remove('mobile-open');
+            els.mobileOverlay.classList.remove('active');
+        }
+
+        els.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        els.mobileOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking nav items
+        els.navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                closeMobileMenu();
+            }
+        });
 
         // ===== SESSION MANAGEMENT =====
         function saveSession() {
