@@ -1023,7 +1023,7 @@
             color: white;
         }
 
-        /* PRINT STYLES - CORRECTED ORDER */
+        /* PRINT STYLES - CORRECTED ORDER AND CLEAN LAYOUT */
         @media print {
             @page {
                 size: A4 portrait;
@@ -1040,12 +1040,16 @@
                 background: white !important;
                 padding: 0 !important;
                 margin: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                overflow: visible !important;
             }
 
             body::before, body::after {
                 display: none !important;
             }
 
+            /* HIDE ALL NON-PRINT ELEMENTS */
             .sidebar,
             .top-bar,
             .top-actions,
@@ -1053,21 +1057,57 @@
             .btn-delete,
             .toast,
             .modal-overlay,
-            .login-screen {
+            .login-screen,
+            .mobile-menu-btn,
+            .mobile-overlay,
+            .nav-menu,
+            .user-profile,
+            .page-title,
+            .stats-grid,
+            .section-header,
+            .documents-grid,
+            #dashboardView,
+            #savedView,
+            .view-container:not(#newDocView) {
                 display: none !important;
+                visibility: hidden !important;
+            }
+
+            /* SHOW ONLY DOCUMENT */
+            .app,
+            .main-content,
+            .content-area,
+            #newDocView,
+            .document-container,
+            .document-header,
+            .document-body,
+            .form-grid,
+            .form-group,
+            .items-section,
+            .items-table {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
             }
 
             .app {
-                opacity: 1 !important;
-                visibility: visible !important;
+                background: white !important;
+                min-height: auto !important;
             }
 
             .main-content {
                 margin-left: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                display: block !important;
+                flex: none !important;
             }
 
             .content-area {
                 padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
 
             .document-container {
@@ -1075,6 +1115,9 @@
                 border-radius: 0 !important;
                 margin: 0 !important;
                 background: white !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: visible !important;
             }
 
             /* Company Header with Line */
@@ -1085,6 +1128,7 @@
                 margin-bottom: 5mm !important;
                 text-align: right !important;
                 page-break-inside: avoid !important;
+                width: 100% !important;
             }
 
             .document-header .doc-title {
@@ -1101,11 +1145,15 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 font-family: 'Inter', sans-serif !important;
+                width: 100% !important;
             }
 
             .document-body {
                 padding: 0 !important;
                 position: relative !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow: visible !important;
             }
 
             /* Company Info Box - First */
@@ -1122,9 +1170,12 @@
                 text-align: left;
                 font-family: 'Inter', sans-serif;
                 width: 50%;
+                max-width: 50%;
                 box-sizing: border-box;
                 border-radius: 2mm;
                 font-weight: 400;
+                float: left;
+                clear: both;
             }
 
             /* FØLGESEDDEL Banner - After company info */
@@ -1142,6 +1193,8 @@
                 border-radius: 2mm !important;
                 font-family: 'Inter', sans-serif !important;
                 text-transform: uppercase !important;
+                width: 100% !important;
+                clear: both !important;
             }
 
             /* Form Grid */
@@ -1151,6 +1204,8 @@
                 page-break-inside: avoid !important;
                 background: white !important;
                 padding: 0 !important;
+                width: 100% !important;
+                clear: both !important;
             }
 
             .form-group {
@@ -1166,6 +1221,7 @@
                 display: block !important;
                 width: 100% !important;
                 margin-right: 0 !important;
+                clear: both !important;
             }
 
             .form-label {
@@ -1189,16 +1245,15 @@
                 width: 100% !important;
                 margin: 0 !important;
                 font-family: 'Inter', sans-serif !important;
+                box-shadow: none !important;
+                outline: none !important;
             }
 
             /* Table */
             .items-section {
                 margin-top: 4mm !important;
                 clear: both !important;
-            }
-
-            .section-header {
-                display: none !important;
+                width: 100% !important;
             }
 
             .items-table {
@@ -1208,6 +1263,7 @@
                 border: 1px solid #00b0f0 !important;
                 border-radius: 2mm !important;
                 overflow: hidden !important;
+                table-layout: fixed !important;
             }
 
             .items-table thead {
@@ -1231,6 +1287,10 @@
                 width: 15% !important;
             }
 
+            .items-table th.col-actions {
+                display: none !important;
+            }
+
             .items-table tbody tr {
                 page-break-inside: avoid !important;
                 background: white !important;
@@ -1249,6 +1309,10 @@
                 font-family: 'Inter', sans-serif !important;
             }
 
+            .items-table tbody td:last-child {
+                display: none !important;
+            }
+
             .items-table tbody tr:last-child td {
                 border-bottom: none !important;
             }
@@ -1262,6 +1326,8 @@
                 font-weight: 400 !important;
                 width: 100% !important;
                 font-family: 'Inter', sans-serif !important;
+                box-shadow: none !important;
+                outline: none !important;
             }
 
             .table-input.antal {
@@ -1274,6 +1340,7 @@
                 min-height: auto !important;
                 overflow: visible !important;
                 resize: none !important;
+                height: auto !important;
             }
 
             /* Footer */
@@ -1299,6 +1366,11 @@
                 }
             }
 
+            /* Force hide any remaining elements */
+            * {
+                overflow: visible !important;
+            }
+
             /* Hide input controls */
             input::-webkit-calendar-picker-indicator,
             input::-webkit-inner-spin-button,
@@ -1310,6 +1382,13 @@
             input[type="date"],
             input[type="number"] {
                 -moz-appearance: textfield !important;
+            }
+
+            /* Clean up any floating elements */
+            .clearfix::after {
+                content: "";
+                display: table;
+                clear: both;
             }
         }
 
