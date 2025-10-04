@@ -1863,8 +1863,105 @@
                 <div class="view-container" id="savedView" style="display: none;">
                     <div class="section-header">
                         <h2 class="section-title">Gemte Dokumenter</h2>
+                        <button class="btn btn-danger" id="clearAllDocsBtn">
+                            <span>🗑️</span> Slet Alle
+                        </button>
                     </div>
                     <div class="documents-grid" id="savedDocs"></div>
+                </div>
+
+                <!-- TEMPLATES VIEW -->
+                <div class="view-container" id="templatesView" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">Skabeloner</h2>
+                        <button class="btn btn-primary" id="createTemplateBtn">
+                            <span>➕</span> Opret Skabelon
+                        </button>
+                    </div>
+                    <div class="documents-grid" id="templatesGrid"></div>
+                </div>
+
+                <!-- CUSTOMERS VIEW -->
+                <div class="view-container" id="customersView" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">Kunder</h2>
+                        <button class="btn btn-primary" id="addCustomerBtn">
+                            <span>➕</span> Tilføj Kunde
+                        </button>
+                    </div>
+                    
+                    <div class="stats-grid" style="margin-bottom: 2rem;">
+                        <div class="stat-card">
+                            <div class="stat-label">Aktive Kunder</div>
+                            <div class="stat-value" id="activeCustomers">0</div>
+                            <div class="stat-change positive">+0 denne måned</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Kunder</div>
+                            <div class="stat-value" id="totalCustomers">0</div>
+                            <div class="stat-change">Alle registrerede</div>
+                        </div>
+                    </div>
+
+                    <div class="customers-table-container">
+                        <table class="items-table">
+                            <thead>
+                                <tr>
+                                    <th>Firma</th>
+                                    <th>Kontakt</th>
+                                    <th>Email</th>
+                                    <th>Telefon</th>
+                                    <th>Sidst Aktiv</th>
+                                    <th style="width: 100px;">Handlinger</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ANALYTICS VIEW -->
+                <div class="view-container" id="analyticsView" style="display: none;">
+                    <div class="section-header">
+                        <h2 class="section-title">Analyse</h2>
+                        <button class="btn btn-secondary" id="exportAnalyticsBtn">
+                            <span>📊</span> Eksporter Rapport
+                        </button>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Dokumenter denne uge</div>
+                            <div class="stat-value" id="weeklyDocs">0</div>
+                            <div class="stat-change positive" id="weeklyChange">+0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Gennemsnitlige varer</div>
+                            <div class="stat-value" id="avgItems">0</div>
+                            <div class="stat-change">pr. dokument</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Top kunde</div>
+                            <div class="stat-value" style="font-size: 1rem;" id="topCustomer">-</div>
+                            <div class="stat-change" id="topCustomerCount">0 dokumenter</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Produktivitet</div>
+                            <div class="stat-value" id="productivity">0</div>
+                            <div class="stat-change">dok./dag</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 1rem; color: var(--gray-900);">📈 Månedlig Aktivitet</h3>
+                        <div id="monthlyChart" style="height: 300px; display: flex; align-items: center; justify-content: center; color: var(--gray-500);">
+                            <div style="text-align: center;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📊</div>
+                                <p>Grafisk analyse vil blive vist her</p>
+                                <p style="font-size: 0.875rem; margin-top: 0.5rem;">Baseret på dokumentaktivitet</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -2068,7 +2165,9 @@
         const state = {
             currentView: 'dashboard',
             currentDoc: null,
-            documents: []
+            documents: [],
+            templates: [],
+            customers: []
         };
 
         // Elements
@@ -2093,7 +2192,10 @@
             views: {
                 dashboard: document.getElementById('dashboardView'),
                 new: document.getElementById('newDocView'),
-                saved: document.getElementById('savedView')
+                saved: document.getElementById('savedView'),
+                templates: document.getElementById('templatesView'),
+                customers: document.getElementById('customersView'),
+                analytics: document.getElementById('analyticsView')
             },
             
             docDate: document.getElementById('docDate'),
@@ -2112,6 +2214,26 @@
             
             recentDocs: document.getElementById('recentDocs'),
             savedDocs: document.getElementById('savedDocs'),
+            clearAllDocsBtn: document.getElementById('clearAllDocsBtn'),
+            
+            // Templates
+            templatesGrid: document.getElementById('templatesGrid'),
+            createTemplateBtn: document.getElementById('createTemplateBtn'),
+            
+            // Customers
+            customersTableBody: document.getElementById('customersTableBody'),
+            addCustomerBtn: document.getElementById('addCustomerBtn'),
+            activeCustomers: document.getElementById('activeCustomers'),
+            totalCustomers: document.getElementById('totalCustomers'),
+            
+            // Analytics
+            weeklyDocs: document.getElementById('weeklyDocs'),
+            avgItems: document.getElementById('avgItems'),
+            topCustomer: document.getElementById('topCustomer'),
+            topCustomerCount: document.getElementById('topCustomerCount'),
+            productivity: document.getElementById('productivity'),
+            weeklyChange: document.getElementById('weeklyChange'),
+            exportAnalyticsBtn: document.getElementById('exportAnalyticsBtn'),
             
             todayCount: document.getElementById('todayCount'),
             monthCount: document.getElementById('monthCount'),
@@ -2504,9 +2626,9 @@
                 dashboard: { title: 'Dashboard', element: els.views.dashboard },
                 new: { title: 'Ny Følgeseddel', element: els.views.new },
                 saved: { title: 'Gemte Dokumenter', element: els.views.saved },
-                templates: { title: 'Skabeloner', element: null },
-                customers: { title: 'Kunder', element: null },
-                analytics: { title: 'Analyse', element: null }
+                templates: { title: 'Skabeloner', element: els.views.templates },
+                customers: { title: 'Kunder', element: els.views.customers },
+                analytics: { title: 'Analyse', element: els.views.analytics }
             };
 
             const view = viewMap[viewName];
@@ -2518,6 +2640,9 @@
 
                 if (viewName === 'dashboard') updateDashboard();
                 if (viewName === 'saved') renderSavedDocuments();
+                if (viewName === 'templates') renderTemplates();
+                if (viewName === 'customers') renderCustomers();
+                if (viewName === 'analytics') renderAnalytics();
             }
         }
 
@@ -2599,6 +2724,34 @@
             updateDashboard();
         }
 
+        function deleteDocument(id) {
+            if (confirm('Er du sikker på at du vil slette dette dokument?')) {
+                state.documents = state.documents.filter(d => d.id !== id);
+                try {
+                    localStorage.setItem(DOCS_KEY, JSON.stringify(state.documents));
+                } catch (e) {
+                    console.error('Delete error:', e);
+                }
+                toast('Dokument slettet', 'success');
+                updateDashboard();
+                if (state.currentView === 'saved') renderSavedDocuments();
+            }
+        }
+
+        function clearAllDocuments() {
+            if (confirm('Er du sikker på at du vil slette ALLE dokumenter? Dette kan ikke fortrydes.')) {
+                state.documents = [];
+                try {
+                    localStorage.setItem(DOCS_KEY, JSON.stringify(state.documents));
+                } catch (e) {
+                    console.error('Clear error:', e);
+                }
+                toast('Alle dokumenter slettet', 'success');
+                updateDashboard();
+                renderSavedDocuments();
+            }
+        }
+
         function loadDocuments() {
             try {
                 const saved = localStorage.getItem(DOCS_KEY);
@@ -2634,6 +2787,7 @@
         }
 
         window.loadDocument = loadDocument;
+        window.deleteDocument = deleteDocument;
 
         els.clearBtn.addEventListener('click', clearForm);
         els.saveBtn.addEventListener('click', saveDocument);
@@ -2641,6 +2795,37 @@
         els.printBtn.addEventListener('click', () => {
             toast('Forbereder print...', 'success');
             setTimeout(() => window.print(), 300);
+        });
+
+        // Document management
+        els.clearAllDocsBtn.addEventListener('click', clearAllDocuments);
+
+        // Templates
+        els.createTemplateBtn.addEventListener('click', createTemplate);
+
+        // Customers  
+        els.addCustomerBtn.addEventListener('click', addCustomer);
+
+        // Analytics
+        els.exportAnalyticsBtn.addEventListener('click', () => {
+            const analyticsData = {
+                totalDocuments: state.documents.length,
+                weeklyDocuments: state.documents.filter(d => new Date(d.created) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length,
+                averageItems: state.documents.length > 0 ? Math.round(state.documents.reduce((acc, doc) => acc + doc.items.length, 0) / state.documents.length) : 0,
+                customers: state.customers.length,
+                templates: state.templates.length,
+                generatedAt: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(analyticsData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `felson-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            toast('Analyse rapport eksporteret', 'success');
         });
 
         // ===== DASHBOARD =====
@@ -2680,15 +2865,224 @@
 
         function renderSavedDocuments() {
             els.savedDocs.innerHTML = state.documents.slice().reverse().map(doc => `
-                <div class="doc-card" onclick="loadDocument(${doc.id})">
+                <div class="doc-card">
                     <div class="doc-card-header">
                         <div class="doc-number">#${doc.order || 'Ingen nr.'}</div>
                         <div class="doc-date">${new Date(doc.created).toLocaleDateString('da-DK')}</div>
                     </div>
                     <div class="doc-meta">${doc.delivery || 'Ingen leveringsadresse'}</div>
                     <div class="doc-items-count">${doc.items.length} varer</div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary" onclick="loadDocument(${doc.id})" style="flex: 1; font-size: 0.75rem; padding: 0.5rem;">
+                            📄 Åbn
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteDocument(${doc.id})" style="flex: 1; font-size: 0.75rem; padding: 0.5rem;">
+                            🗑️ Slet
+                        </button>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        // ===== TEMPLATES =====
+        function renderTemplates() {
+            if (state.templates.length === 0) {
+                els.templatesGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray-500);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                        <h3>Ingen skabeloner endnu</h3>
+                        <p>Opret din første skabelon for at spare tid</p>
+                    </div>
+                `;
+                return;
+            }
+
+            els.templatesGrid.innerHTML = state.templates.map(template => `
+                <div class="doc-card">
+                    <div class="doc-card-header">
+                        <div class="doc-number">📋 ${template.name}</div>
+                        <div class="doc-date">${new Date(template.created).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    <div class="doc-meta">${template.description || 'Ingen beskrivelse'}</div>
+                    <div class="doc-items-count">${template.items.length} forudindstillede varer</div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn btn-primary" onclick="useTemplate(${template.id})" style="flex: 1; font-size: 0.75rem; padding: 0.5rem;">
+                            ✨ Brug
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteTemplate(${template.id})" style="flex: 1; font-size: 0.75rem; padding: 0.5rem;">
+                            🗑️ Slet
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function createTemplate() {
+            const name = prompt('Navn på skabelon:');
+            if (!name) return;
+
+            const description = prompt('Beskrivelse (valgfri):') || '';
+            const currentItems = Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
+                antal: row.querySelector('.antal').value || '0',
+                beskrivelse: row.querySelector('.table-textarea').value || ''
+            }));
+
+            const template = {
+                id: Date.now(),
+                name: name,
+                description: description,
+                items: currentItems,
+                created: new Date().toISOString()
+            };
+
+            state.templates.push(template);
+            try {
+                localStorage.setItem('felson_templates', JSON.stringify(state.templates));
+            } catch (e) {
+                console.error('Template save error:', e);
+            }
+
+            toast('Skabelon oprettet', 'success');
+            if (state.currentView === 'templates') renderTemplates();
+        }
+
+        function useTemplate(id) {
+            const template = state.templates.find(t => t.id === id);
+            if (!template) return;
+
+            els.itemsBody.innerHTML = '';
+            template.items.forEach(item => addItem(item.antal, item.beskrivelse));
+            
+            switchView('new');
+            toast('Skabelon anvendt', 'success');
+        }
+
+        function deleteTemplate(id) {
+            if (confirm('Er du sikker på at du vil slette denne skabelon?')) {
+                state.templates = state.templates.filter(t => t.id !== id);
+                try {
+                    localStorage.setItem('felson_templates', JSON.stringify(state.templates));
+                } catch (e) {
+                    console.error('Template delete error:', e);
+                }
+                toast('Skabelon slettet', 'success');
+                renderTemplates();
+            }
+        }
+
+        window.useTemplate = useTemplate;
+        window.deleteTemplate = deleteTemplate;
+
+        // ===== CUSTOMERS =====
+        function renderCustomers() {
+            const activeCount = state.customers.filter(c => c.active).length;
+            els.activeCustomers.textContent = activeCount;
+            els.totalCustomers.textContent = state.customers.length;
+
+            if (state.customers.length === 0) {
+                els.customersTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem; color: var(--gray-500);">
+                            <div style="font-size: 2rem; margin-bottom: 1rem;">👥</div>
+                            Ingen kunder registreret endnu
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            els.customersTableBody.innerHTML = state.customers.map(customer => `
+                <tr>
+                    <td><strong>${customer.company}</strong></td>
+                    <td>${customer.contact}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.lastActive ? new Date(customer.lastActive).toLocaleDateString('da-DK') : 'Aldrig'}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteCustomer(${customer.id})" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function addCustomer() {
+            const company = prompt('Firmanavn:');
+            if (!company) return;
+
+            const contact = prompt('Kontaktperson:') || '';
+            const email = prompt('Email:') || '';
+            const phone = prompt('Telefon:') || '';
+
+            const customer = {
+                id: Date.now(),
+                company: company,
+                contact: contact,
+                email: email,
+                phone: phone,
+                active: true,
+                created: new Date().toISOString(),
+                lastActive: null
+            };
+
+            state.customers.push(customer);
+            try {
+                localStorage.setItem('felson_customers', JSON.stringify(state.customers));
+            } catch (e) {
+                console.error('Customer save error:', e);
+            }
+
+            toast('Kunde tilføjet', 'success');
+            renderCustomers();
+        }
+
+        function deleteCustomer(id) {
+            if (confirm('Er du sikker på at du vil slette denne kunde?')) {
+                state.customers = state.customers.filter(c => c.id !== id);
+                try {
+                    localStorage.setItem('felson_customers', JSON.stringify(state.customers));
+                } catch (e) {
+                    console.error('Customer delete error:', e);
+                }
+                toast('Kunde slettet', 'success');
+                renderCustomers();
+            }
+        }
+
+        window.deleteCustomer = deleteCustomer;
+
+        // ===== ANALYTICS =====
+        function renderAnalytics() {
+            const now = new Date();
+            const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            
+            const weeklyDocs = state.documents.filter(d => new Date(d.created) >= weekAgo);
+            const totalItems = state.documents.reduce((acc, doc) => acc + doc.items.length, 0);
+            const avgItems = state.documents.length > 0 ? Math.round(totalItems / state.documents.length) : 0;
+            
+            const customerCounts = {};
+            state.documents.forEach(doc => {
+                const key = doc.delivery || 'Ukendt kunde';
+                customerCounts[key] = (customerCounts[key] || 0) + 1;
+            });
+
+            const topCustomerEntry = Object.entries(customerCounts).sort((a, b) => b[1] - a[1])[0];
+            const topCustomer = topCustomerEntry ? topCustomerEntry[0] : '-';
+            const topCustomerCount = topCustomerEntry ? topCustomerEntry[1] : 0;
+
+            const productivity = state.documents.length > 0 ? 
+                Math.round(state.documents.length / Math.max(1, Math.ceil((now - new Date(state.documents[0].created)) / (1000 * 60 * 60 * 24)))) : 0;
+
+            els.weeklyDocs.textContent = weeklyDocs.length;
+            els.avgItems.textContent = avgItems;
+            els.topCustomer.textContent = topCustomer.length > 20 ? topCustomer.substring(0, 20) + '...' : topCustomer;
+            els.topCustomerCount.textContent = `${topCustomerCount} dokumenter`;
+            els.productivity.textContent = productivity;
+
+            const weeklyChange = weeklyDocs.length > 0 ? '+' + Math.round((weeklyDocs.length / Math.max(1, state.documents.length - weeklyDocs.length)) * 100) + '%' : '0%';
+            els.weeklyChange.textContent = weeklyChange;
+            els.weeklyChange.className = weeklyDocs.length > 0 ? 'stat-change positive' : 'stat-change';
         }
 
         // ===== PDF GENERATION =====
@@ -2869,6 +3263,8 @@
         // ===== INITIALIZE =====
         function init() {
             loadDocuments();
+            loadTemplates();
+            loadCustomers();
             
             if (!restoreSession()) {
                 els.loginScreen.classList.remove('hidden');
@@ -2877,6 +3273,24 @@
             updateDashboard();
             els.docDate.valueAsDate = new Date();
             addItem();
+        }
+
+        function loadTemplates() {
+            try {
+                const saved = localStorage.getItem('felson_templates');
+                state.templates = saved ? JSON.parse(saved) : [];
+            } catch (e) {
+                state.templates = [];
+            }
+        }
+
+        function loadCustomers() {
+            try {
+                const saved = localStorage.getItem('felson_customers');
+                state.customers = saved ? JSON.parse(saved) : [];
+            } catch (e) {
+                state.customers = [];
+            }
         }
 
         window.addEventListener('DOMContentLoaded', init);
