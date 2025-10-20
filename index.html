@@ -620,6 +620,55 @@
             padding: 2rem;
         }
 
+        /* Editable Company Info Box */
+        .company-info-box {
+            background: #eeeeee;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            width: 50%;
+            min-width: 280px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .company-info-box:hover {
+            border-color: var(--primary);
+            background: #e8e8e8;
+        }
+
+        .company-info-box textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9375rem;
+            line-height: 1.4;
+            color: #333;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .company-info-box textarea:focus {
+            outline: none;
+        }
+
+        .company-info-edit-hint {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--gray-400);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .company-info-box:hover .company-info-edit-hint {
+            opacity: 1;
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1023,7 +1072,7 @@
             color: white;
         }
 
-        /* PRINT STYLES - CORRECTED ORDER AND CLEAN LAYOUT */
+        /* PRINT STYLES */
         @media print {
             @page {
                 size: A4 portrait;
@@ -1049,7 +1098,6 @@
                 display: none !important;
             }
 
-            /* HIDE ALL NON-PRINT ELEMENTS */
             .sidebar,
             .top-bar,
             .top-actions,
@@ -1066,6 +1114,7 @@
             .stats-grid,
             .section-header,
             .documents-grid,
+            .company-info-edit-hint,
             #dashboardView,
             #savedView,
             .view-container:not(#newDocView) {
@@ -1073,7 +1122,6 @@
                 visibility: hidden !important;
             }
 
-            /* SHOW ONLY DOCUMENT */
             .app,
             .main-content,
             .content-area,
@@ -1084,7 +1132,8 @@
             .form-grid,
             .form-group,
             .items-section,
-            .items-table {
+            .items-table,
+            .company-info-box {
                 display: block !important;
                 visibility: visible !important;
                 opacity: 1 !important;
@@ -1120,7 +1169,6 @@
                 overflow: visible !important;
             }
 
-            /* Company Header with Line */
             .document-header {
                 padding: 0 0 3mm 0 !important;
                 background: white !important;
@@ -1156,29 +1204,46 @@
                 overflow: visible !important;
             }
 
-            /* Company Info Box - First */
-            .document-body::before {
-                content: 'Felson Watersafe ApS\A Gartnervej 4\A 6710 Esbjerg V\A CVR-nr. DK26813522\A Tlf. 70206676\A felson@felson.dk';
-                white-space: pre-line;
-                display: block;
-                background: #eeeeee;
-                padding: 4mm;
-                margin: 0 0 6mm 0;
-                font-size: 9pt;
-                line-height: 1.4;
-                color: #333;
-                text-align: left;
-                font-family: 'Inter', sans-serif;
-                width: 50%;
-                max-width: 50%;
-                box-sizing: border-box;
-                border-radius: 2mm;
-                font-weight: 400;
-                float: left;
-                clear: both;
+            .company-info-box {
+                display: block !important;
+                background: #eeeeee !important;
+                padding: 4mm !important;
+                margin: 0 0 6mm 0 !important;
+                font-size: 9pt !important;
+                line-height: 1.4 !important;
+                color: #333 !important;
+                text-align: left !important;
+                font-family: 'Inter', sans-serif !important;
+                width: 50% !important;
+                max-width: 50% !important;
+                box-sizing: border-box !important;
+                border-radius: 2mm !important;
+                font-weight: 400 !important;
+                float: left !important;
+                clear: both !important;
+                border: none !important;
+                cursor: default !important;
             }
 
-            /* FØLGESEDDEL Banner - After company info */
+            .company-info-box textarea {
+                display: block !important;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                font-size: 9pt !important;
+                color: #333 !important;
+                font-weight: 400 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                font-family: 'Inter', sans-serif !important;
+                box-shadow: none !important;
+                outline: none !important;
+                line-height: 1.4 !important;
+                resize: none !important;
+                min-height: auto !important;
+                white-space: pre-line !important;
+            }
+
             .form-grid::before {
                 content: 'FØLGESEDDEL';
                 display: block !important;
@@ -1197,7 +1262,6 @@
                 clear: both !important;
             }
 
-            /* Form Grid */
             .form-grid {
                 display: block !important;
                 margin-bottom: 6mm !important;
@@ -1249,7 +1313,6 @@
                 outline: none !important;
             }
 
-            /* Table */
             .items-section {
                 margin-top: 4mm !important;
                 clear: both !important;
@@ -1343,7 +1406,6 @@
                 height: auto !important;
             }
 
-            /* Footer */
             @page {
                 @bottom-center {
                     content: 'Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V\A CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk';
@@ -1366,12 +1428,10 @@
                 }
             }
 
-            /* Force hide any remaining elements */
             * {
                 overflow: visible !important;
             }
 
-            /* Hide input controls */
             input::-webkit-calendar-picker-indicator,
             input::-webkit-inner-spin-button,
             input::-webkit-outer-spin-button {
@@ -1384,7 +1444,6 @@
                 -moz-appearance: textfield !important;
             }
 
-            /* Clean up any floating elements */
             .clearfix::after {
                 content: "";
                 display: table;
@@ -1392,498 +1451,26 @@
             }
         }
 
-        /* RESPONSIVE DESIGN - SAME LAYOUT FOR ALL DEVICES */
-        
-        /* Base mobile-first approach - but maintaining desktop structure */
-        .mobile-menu-btn {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            background: none;
-            border: none;
-            font-size: 1.375rem;
-            color: var(--gray-700);
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s;
-        }
-
-        .mobile-menu-btn:hover {
-            background: var(--gray-100);
-        }
-
-        .mobile-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 999;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .mobile-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Mobile FAB */
-        .mobile-fab {
-            position: fixed;
-            bottom: 2rem;
-            right: 1rem;
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4);
-            z-index: 100;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.5);
-        }
-
-        .mobile-fab.show {
-            display: flex;
-        }
-
-        /* Desktop (1024px+) - Full layout */
-        @media (min-width: 1024px) {
-            .mobile-menu-btn {
-                display: none !important;
-            }
-            
-            .mobile-fab {
-                display: none !important;
-            }
-            
-            .sidebar {
-                transform: translateX(0) !important;
-                position: fixed !important;
-            }
-            
-            .main-content {
-                margin-left: var(--sidebar-width) !important;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .documents-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        /* Tablet and Mobile (≤1023px) - SAME LAYOUT AS DESKTOP */
-        @media (max-width: 1023px) {
-            :root {
-                --sidebar-width: 280px;
-            }
-
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1001;
-                box-shadow: none;
-            }
-
-            .sidebar.mobile-open {
-                transform: translateX(0);
-                box-shadow: 4px 0 25px rgba(0,0,0,0.4);
-            }
-
-            .main-content {
-                margin-left: 0 !important;
-                width: 100%;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .top-bar {
-                padding: 0 1rem;
-            }
-
-            .page-title {
-                font-size: 1.25rem;
-                flex: 1;
-                min-width: 0;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            .top-actions {
-                gap: 0.5rem;
-            }
-
-            .btn .btn-text {
-                display: inline;
-            }
-
-            .content-area {
-                padding: 1rem;
-            }
-
-            /* MAINTAIN DESKTOP GRID STRUCTURE */
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0.75rem;
-            }
-
-            .documents-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.75rem;
-            }
-
-            /* KEEP DESKTOP FORM LAYOUT */
-            .form-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .form-group.full-width {
-                grid-column: 1 / -1;
-            }
-
-            /* MAINTAIN TABLE STRUCTURE - NO CARD MODE */
-            .items-table {
-                font-size: 0.875rem;
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
-                border: 1px solid var(--gray-200);
-                border-radius: 8px;
-                overflow: hidden;
-                display: table !important;
-            }
-
-            .items-table thead {
-                display: table-header-group !important;
-                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            }
-
-            .items-table tbody {
-                display: table-row-group !important;
-            }
-
-            .items-table tr {
-                display: table-row !important;
-            }
-
-            .items-table th,
-            .items-table td {
-                display: table-cell !important;
-                padding: 0.5rem;
-                vertical-align: middle;
-            }
-
-            .items-table th {
-                color: white;
-                font-weight: 600;
-                font-size: 0.8125rem;
-                text-transform: uppercase;
-            }
-
-            .items-table th.col-antal {
-                text-align: center;
-                width: 15%;
-            }
-
-            .items-table th.col-actions {
-                width: 60px;
-                text-align: center;
-            }
-
-            .items-table tbody tr:hover {
-                background: var(--gray-50);
-            }
-
-            .items-table tbody tr:not(:last-child) td {
-                border-bottom: 1px solid var(--gray-200);
-            }
-
-            .table-input {
-                width: 100%;
-                padding: 0.375rem;
-                border: 1px solid transparent;
-                border-radius: 6px;
-                font-size: 0.8125rem;
-                font-family: 'Inter', sans-serif;
-                transition: all 0.2s;
-            }
-
-            .table-input:focus {
-                outline: none;
-                border-color: var(--primary);
-                background: rgba(14, 165, 233, 0.05);
-            }
-
-            .table-input.antal {
-                text-align: center;
-                font-weight: 600;
-                color: var(--primary);
-            }
-
-            .table-textarea {
-                resize: none;
-                min-height: 2rem;
-            }
-
-            .btn-delete {
-                background: transparent;
-                border: none;
-                color: var(--gray-400);
-                cursor: pointer;
-                font-size: 1.125rem;
-                padding: 0.25rem 0.5rem;
-                border-radius: 4px;
-                transition: all 0.2s;
-            }
-
-            .btn-delete:hover {
-                background: var(--danger);
-                color: white;
-            }
-
-            .modal {
-                max-width: 90%;
-                margin: 1rem auto;
-                max-height: calc(100vh - 2rem);
-            }
-        }
-
-        /* Small adjustments for smaller screens while maintaining structure */
         @media (max-width: 768px) {
             .content-area {
-                padding: 0.75rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-            }
-
-            .documents-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
-            }
-
-            .stat-card,
-            .doc-card {
-                padding: 0.75rem;
-            }
-
-            .stat-value {
-                font-size: 1.5rem;
-            }
-
-            .btn {
-                padding: 0.5rem 0.75rem;
-                font-size: 0.8125rem;
-                min-width: 44px;
-            }
-
-            .btn .btn-text {
-                display: none;
-            }
-
-            .top-bar {
-                padding: 0 0.75rem;
-            }
-
-            .page-title {
-                font-size: 1.125rem;
-            }
-
-            .document-body {
                 padding: 1rem;
             }
 
-            .modal {
-                max-width: 95%;
-                margin: 0.5rem auto;
-            }
-
-            .login-card {
-                margin: 0.5rem;
-                max-width: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .content-area {
-                padding: 0.5rem;
-            }
-
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.375rem;
+                gap: 0.75rem;
             }
 
             .documents-grid {
                 grid-template-columns: 1fr;
-                gap: 0.5rem;
             }
 
-            .stat-card {
-                padding: 0.625rem;
-            }
-
-            .stat-value {
-                font-size: 1.25rem;
-            }
-
-            .stat-label {
-                font-size: 0.75rem;
+            .company-info-box {
+                width: 100%;
             }
 
             .form-grid {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-
-            .document-body {
-                padding: 0.75rem;
-            }
-
-            /* Even on small mobile, keep table structure */
-            .items-table {
-                font-size: 0.75rem;
-                overflow-x: auto;
-                display: block;
-                width: 100%;
-                border-radius: 6px;
-            }
-
-            .items-table table {
-                width: 100%;
-                min-width: 400px;
-                display: table;
-            }
-
-            .items-table thead,
-            .items-table tbody,
-            .items-table tr,
-            .items-table th,
-            .items-table td {
-                display: table-row-group;
-                display: table-row;
-                display: table-cell;
-            }
-
-            .items-table th,
-            .items-table td {
-                padding: 0.375rem 0.25rem;
-                min-width: 80px;
-            }
-
-            .items-table th.col-antal,
-            .items-table td:first-child {
-                min-width: 60px;
-            }
-
-            .table-input {
-                font-size: 0.75rem;
-                padding: 0.25rem;
-            }
-
-            .btn-delete {
-                font-size: 1rem;
-                padding: 0.125rem 0.25rem;
-            }
-
-            .top-actions {
-                gap: 0.25rem;
-            }
-
-            .modal {
-                max-width: calc(100vw - 0.5rem);
-                margin: 0.25rem auto;
-                border-radius: 8px;
-            }
-
-            .mobile-fab.show {
-                display: flex;
-                bottom: 1rem;
-                right: 0.5rem;
-                width: 48px;
-                height: 48px;
-                font-size: 1.25rem;
-            }
-        }
-
-        /* Landscape Mobile Optimization */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .content-area {
-                padding: 0.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0.5rem;
-            }
-
-            .stat-card {
-                padding: 0.5rem;
-            }
-
-            .stat-value {
-                font-size: 1.125rem;
-            }
-
-            .login-card {
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-
-            .modal {
-                max-height: 90vh;
-            }
-        }
-
-        /* Touch Device Optimizations */
-        @media (pointer: coarse) {
-            .btn {
-                min-height: 44px;
-                min-width: 44px;
-            }
-
-            .nav-item {
-                min-height: 48px;
-                padding: 0.875rem;
-            }
-
-            .table-input {
-                min-height: 36px;
-            }
-
-            .form-input {
-                min-height: 44px;
-            }
-
-            .login-input {
-                min-height: 48px;
-            }
-
-            .btn-delete {
-                min-width: 36px;
-                min-height: 36px;
             }
         }
     </style>
@@ -2011,12 +1598,8 @@
                     <button class="btn btn-primary" id="newDocBtn">
                         <span>➕</span> <span class="btn-text">Ny Følgeseddel</span>
                     </button>
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                 </div>
             </div>
-
-            <!-- Mobile Overlay -->
-            <div class="mobile-overlay" id="mobileOverlay"></div>
 
             <div class="content-area">
                 <!-- DASHBOARD VIEW -->
@@ -2057,6 +1640,17 @@
                             <h2 class="doc-title">FØLGESEDDEL</h2>
                         </div>
                         <div class="document-body">
+                            <!-- Editable Company Info Box -->
+                            <div class="company-info-box" title="Klik for at redigere firmaoplysninger">
+                                <textarea id="companyInfoText" placeholder="Indtast firmaoplysninger...">Felson Watersafe ApS
+Gartnervej 4
+6710 Esbjerg V
+CVR-nr. DK26813522
+Tlf. 70206676
+felson@felson.dk</textarea>
+                                <span class="company-info-edit-hint">✏️ Klik for at redigere</span>
+                            </div>
+
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">Dato</label>
@@ -2105,9 +1699,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Mobile Floating Action Button -->
-                <button class="mobile-fab" id="mobileFab">➕</button>
 
                 <!-- SAVED DOCUMENTS VIEW -->
                 <div class="view-container" id="savedView" style="display: none;">
@@ -2218,7 +1809,6 @@
     </div>
 
     <!-- MODALS -->
-    <!-- Security Modal -->
     <div class="modal-overlay" id="securityModal">
         <div class="modal">
             <div class="modal-header">
@@ -2244,7 +1834,6 @@
         </div>
     </div>
 
-    <!-- Settings Modal -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal">
             <div class="modal-header">
@@ -2255,7 +1844,6 @@
                 <div class="login-success" id="settingsSuccess"></div>
                 <div class="login-error" id="settingsError"></div>
 
-                <!-- Email Section -->
                 <div class="settings-section">
                     <h3>📧 Recovery Email</h3>
                     <p style="font-size: 0.875rem; color: var(--gray-600); margin-bottom: 0.75rem;">
@@ -2271,7 +1859,6 @@
                     </div>
                 </div>
 
-                <!-- Username Section -->
                 <div class="settings-section">
                     <h3>👤 Skift Brugernavn</h3>
                     <div class="input-group">
@@ -2284,7 +1871,6 @@
                     </div>
                 </div>
 
-                <!-- Password Section -->
                 <div class="settings-section">
                     <h3>🔒 Skift Adgangskode</h3>
                     <div class="input-group" style="margin-bottom: 0.75rem;">
@@ -2312,7 +1898,6 @@
         </div>
     </div>
 
-    <!-- Password Recovery Modal -->
     <div class="modal-overlay" id="recoveryModal">
         <div class="modal">
             <div class="modal-header">
@@ -2349,7 +1934,6 @@
         </div>
     </div>
 
-    <!-- User Menu Modal -->
     <div class="modal-overlay" id="userMenuModal">
         <div class="modal">
             <div class="modal-header">
@@ -2381,7 +1965,6 @@
         </div>
     </div>
 
-    <!-- TOAST -->
     <div class="toast" id="toast">
         <div class="toast-icon">✓</div>
         <span id="toastMessage"></span>
@@ -2397,10 +1980,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        // ===== SESSION & USER MANAGEMENT =====
         const SESSION_KEY = 'felson_session';
         const ACCOUNT_KEY = 'felson_account';
         const DOCS_KEY = 'felson_documents';
+        const COMPANY_INFO_KEY = 'felson_company_info';
 
         let userData = {
             username: 'admin',
@@ -2411,7 +1994,6 @@
 
         let isAuthenticated = false;
 
-        // State management
         const state = {
             currentView: 'dashboard',
             currentDoc: null,
@@ -2420,7 +2002,6 @@
             customers: []
         };
 
-        // Elements
         const els = {
             loginScreen: document.getElementById('loginScreen'),
             loginForm: document.getElementById('loginForm'),
@@ -2435,10 +2016,6 @@
             userName: document.getElementById('userName'),
             userProfile: document.getElementById('userProfile'),
             logoutBtn: document.getElementById('logoutBtn'),
-            mobileMenuBtn: document.getElementById('mobileMenuBtn'),
-            mobileOverlay: document.getElementById('mobileOverlay'),
-            mobileFab: document.getElementById('mobileFab'),
-            sidebar: document.querySelector('.sidebar'),
             
             views: {
                 dashboard: document.getElementById('dashboardView'),
@@ -2452,6 +2029,7 @@
             docDate: document.getElementById('docDate'),
             docOrder: document.getElementById('docOrder'),
             docDelivery: document.getElementById('docDelivery'),
+            companyInfoText: document.getElementById('companyInfoText'),
             itemsBody: document.getElementById('itemsBody'),
             itemTemplate: document.getElementById('itemTemplate'),
             
@@ -2467,17 +2045,14 @@
             savedDocs: document.getElementById('savedDocs'),
             clearAllDocsBtn: document.getElementById('clearAllDocsBtn'),
             
-            // Templates
             templatesGrid: document.getElementById('templatesGrid'),
             createTemplateBtn: document.getElementById('createTemplateBtn'),
             
-            // Customers
             customersTableBody: document.getElementById('customersTableBody'),
             addCustomerBtn: document.getElementById('addCustomerBtn'),
             activeCustomers: document.getElementById('activeCustomers'),
             totalCustomers: document.getElementById('totalCustomers'),
             
-            // Analytics
             weeklyDocs: document.getElementById('weeklyDocs'),
             avgItems: document.getElementById('avgItems'),
             topCustomer: document.getElementById('topCustomer'),
@@ -2531,139 +2106,6 @@
             logoutFromMenu: document.getElementById('logoutFromMenu')
         };
 
-        // ===== MOBILE MENU & RESPONSIVE =====
-        function toggleMobileMenu() {
-            els.sidebar.classList.toggle('mobile-open');
-            els.mobileOverlay.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            if (els.sidebar.classList.contains('mobile-open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
-        function closeMobileMenu() {
-            els.sidebar.classList.remove('mobile-open');
-            els.mobileOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function updateMobileFab() {
-            const isMobile = window.innerWidth <= 480;
-            const isNewDocView = state.currentView === 'new';
-            
-            if (isMobile && !isNewDocView) {
-                els.mobileFab.classList.add('show');
-            } else {
-                els.mobileFab.classList.remove('show');
-            }
-        }
-
-        function handleResponsiveChanges() {
-            const width = window.innerWidth;
-            
-            // Close mobile menu on larger screens
-            if (width > 1024) {
-                closeMobileMenu();
-            }
-            
-            // Update mobile FAB visibility
-            updateMobileFab();
-            
-            // Add mobile table labels for small screens
-            if (width <= 480) {
-                addMobileTableLabels();
-            }
-        }
-
-        function addMobileTableLabels() {
-            const tables = document.querySelectorAll('.items-table tbody tr');
-            tables.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length >= 2) {
-                    cells[0].setAttribute('data-label', 'ANTAL');
-                    cells[1].setAttribute('data-label', 'BESKRIVELSE');
-                }
-            });
-        }
-
-        // Event listeners for mobile menu
-        els.mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-
-        els.mobileOverlay.addEventListener('click', closeMobileMenu);
-
-        // Mobile FAB functionality
-        els.mobileFab.addEventListener('click', () => {
-            switchView('new');
-            closeMobileMenu();
-        });
-
-        // Close mobile menu when clicking nav items
-        els.navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
-                    setTimeout(closeMobileMenu, 150);
-                }
-            });
-        });
-
-        // Handle window resize and orientation changes
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(handleResponsiveChanges, 150);
-        });
-
-        window.addEventListener('orientationchange', () => {
-            setTimeout(handleResponsiveChanges, 300);
-        });
-
-        // Touch events for better mobile interaction
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        els.sidebar.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
-
-        els.sidebar.addEventListener('touchmove', (e) => {
-            if (!els.sidebar.classList.contains('mobile-open')) return;
-            
-            const touchX = e.touches[0].clientX;
-            const touchY = e.touches[0].clientY;
-            const deltaX = touchStartX - touchX;
-            const deltaY = Math.abs(touchStartY - touchY);
-            
-            // Swipe left to close menu
-            if (deltaX > 50 && deltaY < 100) {
-                closeMobileMenu();
-            }
-        });
-
-        // Prevent menu close when touching inside sidebar
-        els.sidebar.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        // Keyboard support for accessibility
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && els.sidebar.classList.contains('mobile-open')) {
-                closeMobileMenu();
-            }
-        });
-
-        // Update FAB when view changes
-        function updateFabOnViewChange() {
-            setTimeout(updateMobileFab, 100);
-        }
-
-        // ===== SESSION MANAGEMENT =====
         function saveSession() {
             try {
                 sessionStorage.setItem(SESSION_KEY, JSON.stringify({
@@ -2708,7 +2150,6 @@
             }
         }
 
-        // ===== LOGIN / LOGOUT =====
         function showApp() {
             els.loginScreen.classList.add('hidden');
             setTimeout(() => {
@@ -2762,7 +2203,6 @@
             logout();
         });
 
-        // ===== MODAL MANAGEMENT =====
         function openModal(modal) {
             modal.classList.add('active');
         }
@@ -2783,11 +2223,9 @@
             element.classList.remove('show');
         }
 
-        // User profile menu
         els.userProfile.addEventListener('click', () => openModal(els.userMenuModal));
         els.closeUserMenuBtn.addEventListener('click', () => closeModal(els.userMenuModal));
 
-        // Security modal
         els.navItems.forEach(item => {
             if (item.dataset.view === 'security') {
                 item.addEventListener('click', (e) => {
@@ -2822,7 +2260,6 @@
         els.closeSecurityBtn.addEventListener('click', () => closeModal(els.securityModal));
         els.closeSettingsBtn.addEventListener('click', () => closeModal(els.settingsModal));
 
-        // Password recovery
         els.forgotPasswordLink.addEventListener('click', (e) => {
             e.preventDefault();
             openModal(els.recoveryModal);
@@ -2880,7 +2317,6 @@
             }, 10000);
         });
 
-        // Settings actions
         els.saveEmailBtn.addEventListener('click', () => {
             const email = els.recoveryEmail.value.trim();
             
@@ -2963,14 +2399,12 @@
             toast('Adgangskode opdateret', 'success');
         });
 
-        // Close modals on backdrop click
         [els.securityModal, els.settingsModal, els.recoveryModal, els.userMenuModal].forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) closeModal(modal);
             });
         });
 
-        // ===== VIEW MANAGEMENT =====
         function switchView(viewName) {
             Object.values(els.views).forEach(v => v.style.display = 'none');
             els.navItems.forEach(i => i.classList.remove('active'));
@@ -2996,14 +2430,6 @@
                 if (viewName === 'templates') renderTemplates();
                 if (viewName === 'customers') renderCustomers();
                 if (viewName === 'analytics') renderAnalytics();
-                
-                // Update mobile FAB visibility
-                updateFabOnViewChange();
-                
-                // Close mobile menu on view change
-                if (window.innerWidth <= 1024) {
-                    setTimeout(closeMobileMenu, 100);
-                }
             }
         }
 
@@ -3018,7 +2444,31 @@
 
         els.newDocBtn.addEventListener('click', () => switchView('new'));
 
-        // ===== ITEMS MANAGEMENT =====
+        function saveCompanyInfo() {
+            const companyInfo = els.companyInfoText.value;
+            try {
+                localStorage.setItem(COMPANY_INFO_KEY, companyInfo);
+            } catch (e) {
+                console.error('Company info save error:', e);
+            }
+        }
+
+        function loadCompanyInfo() {
+            try {
+                const saved = localStorage.getItem(COMPANY_INFO_KEY);
+                if (saved && els.companyInfoText) {
+                    els.companyInfoText.value = saved;
+                }
+            } catch (e) {
+                console.error('Company info load error:', e);
+            }
+        }
+
+        if (els.companyInfoText) {
+            els.companyInfoText.addEventListener('input', saveCompanyInfo);
+            els.companyInfoText.addEventListener('blur', saveCompanyInfo);
+        }
+
         function addItem(antal = '', desc = '') {
             const row = els.itemTemplate.content.cloneNode(true);
             const antalInput = row.querySelector('.antal');
@@ -3056,7 +2506,6 @@
             }
         });
 
-        // ===== DOCUMENT MANAGEMENT =====
         function getFormData() {
             const items = Array.from(els.itemsBody.querySelectorAll('tr')).map(row => ({
                 antal: row.querySelector('.antal').value || '0',
@@ -3158,16 +2607,10 @@
             setTimeout(() => window.print(), 300);
         });
 
-        // Document management
         els.clearAllDocsBtn.addEventListener('click', clearAllDocuments);
-
-        // Templates
         els.createTemplateBtn.addEventListener('click', createTemplate);
-
-        // Customers  
         els.addCustomerBtn.addEventListener('click', addCustomer);
 
-        // Analytics
         els.exportAnalyticsBtn.addEventListener('click', () => {
             const analyticsData = {
                 totalDocuments: state.documents.length,
@@ -3189,7 +2632,6 @@
             toast('Analyse rapport eksporteret', 'success');
         });
 
-        // ===== DASHBOARD =====
         function updateDashboard() {
             const today = new Date().toDateString();
             const thisMonth = new Date().getMonth();
@@ -3245,7 +2687,6 @@
             `).join('');
         }
 
-        // ===== TEMPLATES =====
         function renderTemplates() {
             if (state.templates.length === 0) {
                 els.templatesGrid.innerHTML = `
@@ -3334,7 +2775,6 @@
         window.useTemplate = useTemplate;
         window.deleteTemplate = deleteTemplate;
 
-        // ===== CUSTOMERS =====
         function renderCustomers() {
             const activeCount = state.customers.filter(c => c.active).length;
             els.activeCustomers.textContent = activeCount;
@@ -3413,7 +2853,6 @@
 
         window.deleteCustomer = deleteCustomer;
 
-        // ===== ANALYTICS =====
         function renderAnalytics() {
             const now = new Date();
             const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -3446,7 +2885,6 @@
             els.weeklyChange.className = weeklyDocs.length > 0 ? 'stat-change positive' : 'stat-change';
         }
 
-        // ===== PDF GENERATION =====
         function generatePDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -3456,17 +2894,14 @@
             let y = m;
 
             function header() {
-                // Blue top line
                 doc.setFillColor(0, 176, 240);
                 doc.rect(0, 0, w, 3, 'F');
                 
-                // Logo
                 doc.setFontSize(18);
                 doc.setTextColor(0, 176, 240);
                 doc.setFont('helvetica', 'bold');
                 doc.text('Felson Watersafe ApS', w - m, 16, { align: 'right' });
                 
-                // Line under logo
                 doc.setDrawColor(0, 176, 240);
                 doc.setLineWidth(1);
                 doc.line(m, 20, w - m, 20);
@@ -3484,7 +2919,6 @@
                 doc.text('Felson Watersafe ApS / Gartnervej 4 / 6710 Esbjerg V', w / 2, fy - 2, { align: 'center' });
                 doc.text('CVR-nr. DK26813522 / Tlf. 70206676 / felson@felson.dk', w / 2, fy + 2, { align: 'center' });
                 
-                // Page number
                 doc.setFillColor(0, 176, 240);
                 doc.roundedRect(w - m - 15, fy + 4, 15, 6, 1, 1, 'F');
                 doc.setTextColor(255);
@@ -3496,26 +2930,17 @@
             header();
             y = 25;
 
-            // Company info box
+            const companyInfoLines = (els.companyInfoText.value || 'Felson Watersafe ApS\nGartnervej 4\n6710 Esbjerg V\nCVR-nr. DK26813522\nTlf. 70206676\nfelson@felson.dk').split('\n');
             doc.setFillColor(238, 238, 238);
             doc.roundedRect(m, y, 60, 22, 2, 2, 'F');
             doc.setFontSize(9);
             doc.setTextColor(60);
             doc.setFont('helvetica', 'normal');
-            const companyInfo = [
-                'Felson Watersafe ApS',
-                'Gartnervej 4',
-                '6710 Esbjerg V',
-                'CVR-nr. DK26813522',
-                'Tlf. 70206676',
-                'felson@felson.dk'
-            ];
-            companyInfo.forEach((line, i) => {
+            companyInfoLines.slice(0, 6).forEach((line, i) => {
                 doc.text(line, m + 3, y + 4 + (i * 3));
             });
             y += 28;
 
-            // FØLGESEDDEL Banner
             doc.setFillColor(0, 176, 240);
             doc.roundedRect(m, y, w - 2 * m, 10, 2, 2, 'F');
             doc.setFontSize(14);
@@ -3524,7 +2949,6 @@
             doc.text('FØLGESEDDEL', w / 2, y + 6.5, { align: 'center' });
             y += 15;
 
-            // Form section
             doc.setFontSize(9);
             doc.setFont('helvetica', 'bold');
             doc.setTextColor(0, 176, 240);
@@ -3552,7 +2976,6 @@
             doc.text(levLines, m, y + 5);
             y += Math.max(12, levLines.length * 4 + 8);
 
-            // Table header
             doc.setFillColor(0, 176, 240);
             doc.rect(m, y, w - 2 * m, 8, 'F');
             doc.setTextColor(255);
@@ -3562,7 +2985,6 @@
             doc.text('BESKRIVELSE', m + 25, y + 5.5);
             y += 10;
 
-            // Table rows
             const rows = Array.from(els.itemsBody.querySelectorAll('tr'));
             doc.setTextColor(40);
             doc.setFont('helvetica', 'normal');
@@ -3580,7 +3002,6 @@
                     header();
                     y = 30;
                     
-                    // Repeat table header on new page
                     doc.setFillColor(0, 176, 240);
                     doc.rect(m, y, w - 2 * m, 8, 'F');
                     doc.setTextColor(255);
@@ -3613,7 +3034,6 @@
             toast('PDF genereret', 'success');
         }
 
-        // ===== TOAST =====
         function toast(message, type = 'success') {
             els.toastMessage.textContent = message;
             els.toast.className = `toast ${type}`;
@@ -3621,11 +3041,11 @@
             setTimeout(() => els.toast.classList.remove('show'), 3000);
         }
 
-        // ===== INITIALIZE =====
         function init() {
             loadDocuments();
             loadTemplates();
             loadCustomers();
+            loadCompanyInfo();
             
             if (!restoreSession()) {
                 els.loginScreen.classList.remove('hidden');
@@ -3634,51 +3054,6 @@
             updateDashboard();
             els.docDate.valueAsDate = new Date();
             addItem();
-            
-            // Initialize responsive functionality
-            handleResponsiveChanges();
-            
-            // Setup intersection observer for better performance on mobile
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                });
-                
-                // Observe cards for smooth animations
-                setTimeout(() => {
-                    document.querySelectorAll('.doc-card, .stat-card').forEach(card => {
-                        observer.observe(card);
-                    });
-                }, 500);
-            }
-            
-            // Add service worker for PWA functionality (optional enhancement)
-            if ('serviceWorker' in navigator) {
-                // Future PWA implementation could go here
-            }
-            
-            // Initialize mobile-specific features
-            if (window.innerWidth <= 480) {
-                addMobileTableLabels();
-                
-                // Add haptic feedback for supported devices
-                if ('vibrate' in navigator) {
-                    document.addEventListener('click', (e) => {
-                        if (e.target.matches('.btn, .nav-item, .doc-card')) {
-                            navigator.vibrate(10);
-                        }
-                    });
-                }
-            }
-            
-            // Performance optimization for large lists
-            if (state.documents.length > 50) {
-                console.log('Large dataset detected, consider implementing virtual scrolling');
-            }
         }
 
         function loadTemplates() {
@@ -3698,20 +3073,6 @@
                 state.customers = [];
             }
         }
-
-        // Handle page visibility changes for better performance
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Page is hidden, pause animations or reduce activity
-                document.body.style.setProperty('--animation-play-state', 'paused');
-            } else {
-                // Page is visible, resume normal activity
-                document.body.style.setProperty('--animation-play-state', 'running');
-                if (state.currentView === 'dashboard') {
-                    updateDashboard();
-                }
-            }
-        });
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
