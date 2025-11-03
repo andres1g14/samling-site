@@ -1226,6 +1226,11 @@
             }
 
             .company-info-box textarea {
+                display: none !important;
+            }
+            
+            .company-info-box::after {
+                content: attr(data-print-text);
                 display: block !important;
                 background: transparent !important;
                 border: none !important;
@@ -1236,12 +1241,9 @@
                 width: 100% !important;
                 margin: 0 !important;
                 font-family: 'Inter', sans-serif !important;
-                box-shadow: none !important;
-                outline: none !important;
                 line-height: 1.4 !important;
-                resize: none !important;
-                min-height: auto !important;
                 white-space: pre-line !important;
+                overflow: visible !important;
             }
 
             .form-grid::before {
@@ -2603,6 +2605,12 @@ felson@felson.dk</textarea>
         els.saveBtn.addEventListener('click', saveDocument);
         els.pdfBtn.addEventListener('click', generatePDF);
         els.printBtn.addEventListener('click', () => {
+            // Preparar el texto para imprimir
+            const companyBox = document.querySelector('.company-info-box');
+            if (companyBox && els.companyInfoText) {
+                companyBox.setAttribute('data-print-text', els.companyInfoText.value);
+            }
+            
             toast('Forbereder print...', 'success');
             setTimeout(() => window.print(), 300);
         });
